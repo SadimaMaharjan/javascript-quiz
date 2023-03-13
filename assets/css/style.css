@@ -1,0 +1,60 @@
+:root {
+  /* set color for website using CSS variables */
+  /* declare a variable with */
+  --primaryColor: #351b74;
+  --primaryTextColor: #000;
+  --secondaryTextColor: #fff;
+  --secondaryColor: #d391ee;
+}
+body {
+  background: var(--secondaryTextColor);
+  font-family: "Open Sans", sans-serif;
+  color: var(--primaryTextColor);
+  padding: 10px;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 0 40px 0;
+}
+.view-scores {
+  text-decoration: none;
+  color: var(--secondaryColor);
+  font-size: 1.2em;
+}
+
+.timer-display {
+  font-size: 1.2em;
+}
+
+main {
+  text-align: center;
+  width: 75%;
+  margin: 0 auto;
+}
+
+.main-title {
+  font-size: 2em;
+  margin: 0 0 40px 0;
+}
+
+main p {
+  font-size: 1.1em;
+  margin: 0 0 40px 0;
+  line-height: 1.3em;
+}
+
+#start {
+  background-color: var(--primaryColor);
+  color: var(--secondaryTextColor);
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+}
+#start:hover {
+  background-color: var(--secondaryColor);
+}
