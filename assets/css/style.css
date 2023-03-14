@@ -63,7 +63,7 @@ main p {
   display: none;
 }
 
-#question-container {
+.question-container {
   text-align: left;
 }
 

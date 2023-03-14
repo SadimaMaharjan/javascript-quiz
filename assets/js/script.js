@@ -8,14 +8,12 @@ var answerCheckContainer = document.querySelector(".answer-check-container");
 
 var timerCount;
 var score = 0;
-//var questionCounter = 0;
 var availableQuestions = [];
-var currentQuestion = {};
-var htmlOptionContent = "";
 var answerCheck = "";
 
 var quizQuestions = [
   {
+    questionNumber: 0,
     question: "Commonly used data types DO NOT include:",
     answers: {
       1: "strings",
@@ -26,6 +24,7 @@ var quizQuestions = [
     correctAnswer: "3",
   },
   {
+    questionNumber: 1,
     question:
       "The condition in an if/else statement is enclosed within ______.",
     answers: {
@@ -37,6 +36,7 @@ var quizQuestions = [
     correctAnswer: "3",
   },
   {
+    questionNumber: 2,
     question: "Arrays in JavaScript can be used to store ______.",
     answers: {
       1: "numbers and strings",
@@ -47,6 +47,7 @@ var quizQuestions = [
     correctAnswer: "4",
   },
   {
+    questionNumber: 3,
     question:
       "String values must be enclosed within  ______ when being assigned to variables.",
     answers: {
@@ -58,6 +59,7 @@ var quizQuestions = [
     correctAnswer: "3",
   },
   {
+    questionNumber: 4,
     question:
       "A very useful tool used during development and debugging for printing content to the debugger is:",
     answers: {
@@ -77,7 +79,8 @@ function startQuiz() {
   // Prevents start button from being clicked when round is in progress
   startButton.disabled = true;
   startTimer();
-  askMCQs();
+  availableQuestions = [...quizQuestions];
+  askMCQs("0");
 }
 
 // Adding Timer Functionality
@@ -101,44 +104,44 @@ function startTimer() {
 
 // Function to display Multiple Choice Questions
 
-function askMCQs() {
+function askMCQs(questionNumber) {
   landingPageSection.classList.add("hide-section");
   quizSection.classList.add("show-section");
 
-  for (var i = 0; i < quizQuestions.length - 1; i++) {
-    currentQuestion = quizQuestions[i];
+  // getting the question
+  question.innerText = quizQuestions[questionNumber].question;
 
-    question.innerText = currentQuestion.question;
+  // getting the options
+  var op1 = document.getElementById("op1");
+  var op2 = document.getElementById("op2");
+  var op3 = document.getElementById("op3");
+  var op4 = document.getElementById("op4");
 
-    htmlOptionContent += `<button class="option" data-number="${i + 1}">${
-      i + 1
-    }. ${currentQuestion.answers[i + 1]}</button>`;
+  // getting the option text
 
-    optionContainer.innerHTML = htmlOptionContent;
+  op1.innerText = "1. " + quizQuestions[questionNumber].answers[1];
+  op2.innerText = "2. " + quizQuestions[questionNumber].answers[2];
+  op3.innerText = "3. " + quizQuestions[questionNumber].answers[3];
+  op4.innerText = "4. " + quizQuestions[questionNumber].answers[4];
 
-    optionContainer.addEventListener("click", function (event) {
-      if (event.target.matches(".option")) {
-        var selectedOption = event.target.getAttribute("data-number");
+  optionContainer.addEventListener("click", function (event) {
+    if (event.target.matches(".option")) {
+      var selectedOption = event.target.getAttribute("data-number");
+      //console.log(selectedOption);
 
-        if (selectedOption === currentQuestion.correctAnswer) {
-          score += 10;
-          answerCheck += `<span class="check-answer"> Correct! </span>`;
-          answerCheckContainer.innerHTML = answerCheck;
-        } else {
-          score += 0;
-          timerCount -= 10;
-          answerCheck += `<span class="check-answer"> Wrong! </span>`;
-          answerCheckContainer.innerHTML = answerCheck;
-        }
+      if (selectedOption === quizQuestions[questionNumber].correctAnswer) {
+        score += 10;
+        answerCheck = `<span class="check-answer"> Correct! </span>`;
+      } else {
+        score += 0;
+        timerCount -= 10;
+        answerCheck = `<span class="check-answer"> Wrong! </span>`;
       }
-    });
-  }
-
-  //questionCounter++;
-
-  //var questionIndex = Math.floor(Math.random() * availableQuestions.length);
-
-  //currentQuestion = availableQuestions[questionIndex];
+      answerCheckContainer.innerHTML = answerCheck;
+      questionNumber++;
+      askMCQs(questionNumber);
+    }
+  });
 }
 
 // Attach event listener to start button to call startQuiz function on click
