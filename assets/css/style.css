@@ -58,3 +58,69 @@ main p {
 #start:hover {
   background-color: var(--secondaryColor);
 }
+
+.hide-section {
+  display: none;
+}
+
+#question-container {
+  text-align: left;
+}
+
+#question-content {
+  display: none;
+}
+
+#question-content.show-section {
+  display: block;
+  width: 75%;
+  margin: 0 auto;
+}
+
+#question {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.option-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.option {
+  padding: 0.5rem;
+  background-color: var(--primaryColor);
+  color: var(--secondaryTextColor);
+  border: none;
+  border-radius: 8px;
+  margin: 5px 0;
+  cursor: pointer;
+  min-width: 12rem;
+  text-align: left;
+}
+
+.option:hover {
+  background-color: var(--secondaryColor);
+}
+
+.check-answer {
+  display: block;
+  color: #808080;
+  font-size: 1.3em;
+  margin: 40px 0 0 0;
+  position: relative;
+  padding: 20px 0;
+  font-style: italic;
+  font-weight: 100;
+}
+
+.check-answer:before {
+  content: "";
+  border-top: 1px solid #808080;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  left: 0;
+}
