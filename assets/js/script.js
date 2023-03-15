@@ -1,15 +1,29 @@
-// create variables that captures the element
-var startButton = document.getElementById("start");
-var landingPageSection = document.getElementById("landing-content");
-var quizSection = document.getElementById("question-content");
-var question = document.getElementById("question");
-var optionContainer = document.querySelector(".option-container");
-var answerCheckContainer = document.querySelector(".answer-check-container");
+//getting the elements from HTML and assigning them to variables
 
-var timerCount;
+var startButton = document.getElementById("startQuiz");
+var landingContainer = document.getElementById("landing-container");
+var quizContainer = document.getElementById("quiz-container");
+var questionEl = document.getElementById("question");
+var optionsEl = document.getElementById("options");
+var answerCheckContainer = document.querySelector(".answer-check-container");
+var scoreContainer = document.getElementById("score-container");
+var scoreFinal = document.getElementById("score");
+var submitScoreButton = document.getElementById("submit-score");
+var userInitials = document.getElementById("initials");
+var highscoresContainer = document.getElementById("highscores-container");
+var scoreBoard = document.getElementById("score-board");
+var goBackButton = document.getElementById("go-back");
+var clearHighscoresButton = document.getElementById("clear-highscores");
+
+// create variables that captures the element
+
+var timerInterval;
+var timerCount = 60;
 var score = 0;
-var availableQuestions = [];
+var currentQuestionNumber = 0;
 var answerCheck = "";
+var scoreCheck = "";
+var scoreBoard = [];
 
 var quizQuestions = [
   {
@@ -72,77 +86,94 @@ var quizQuestions = [
   },
 ];
 
+// Attach event listener to start button to call startQuiz function on click
+startButton.addEventListener("click", startQuiz);
+var timeEl = document.querySelector(".timer-display");
+
 // Start Quiz function
 
 function startQuiz() {
-  timerCount = 60;
-  // Prevents start button from being clicked when round is in progress
-  startButton.disabled = true;
+  landingContainer.classList.add("hide-section");
+  quizContainer.classList.add("show-section");
+  scoreContainer.classList.add("hide-section");
   startTimer();
-  availableQuestions = [...quizQuestions];
-  askMCQs("0");
+  askQuestion();
 }
 
-// Adding Timer Functionality
-
-var timeEl = document.querySelector(".timer-display");
-
-var timerDisplayEl = document.getElementById("timer");
-
+// Starts timer
 function startTimer() {
   // Sets interval in variable
-  var timerInterval = setInterval(function () {
+  timerInterval = setInterval(function () {
     timerCount--;
     timeEl.textContent = "Time: " + timerCount;
     //console.log(timerCount);
     if (timerCount === 0) {
       // Stops execution of action at set interval
-      clearInterval(timerInterval);
+      stopTimer();
     }
   }, 1000);
 }
 
+function stopTimer() {
+  clearInterval(timerInterval);
+}
+
 // Function to display Multiple Choice Questions
 
-function askMCQs(questionNumber) {
-  landingPageSection.classList.add("hide-section");
-  quizSection.classList.add("show-section");
-
+function askQuestion() {
   // getting the question
-  question.innerText = quizQuestions[questionNumber].question;
+  questionEl.textContent = quizQuestions[currentQuestionNumber].question;
 
-  // getting the options
-  var op1 = document.getElementById("op1");
-  var op2 = document.getElementById("op2");
-  var op3 = document.getElementById("op3");
-  var op4 = document.getElementById("op4");
+  // loop through options for each question
+  for (var i = 0; i < optionsEl.children.length; i++) {
+    optionsEl.children[i].textContent = `${i + 1}. ${
+      quizQuestions[currentQuestionNumber].answers[i + 1]
+    } `;
+  }
+}
+// handle option click event
+optionsEl.addEventListener("click", function (event) {
+  if (event.target.matches(".option")) {
+    checkAnswer(event.target);
+    nextQuestion();
+  }
+});
 
-  // getting the option text
+function checkAnswer(answer) {
+  var selectedOption = answer.getAttribute("data-number");
+  if (selectedOption === quizQuestions[currentQuestionNumber].correctAnswer) {
+    score += 10;
+    answerCheck = `<span class="check-answer"> Correct! </span>`;
+  } else {
+    timerCount -= 10;
+    answerCheck = `<span class="check-answer"> Wrong! </span>`;
+  }
+  answerCheckContainer.innerHTML = answerCheck;
+}
 
-  op1.innerText = "1. " + quizQuestions[questionNumber].answers[1];
-  op2.innerText = "2. " + quizQuestions[questionNumber].answers[2];
-  op3.innerText = "3. " + quizQuestions[questionNumber].answers[3];
-  op4.innerText = "4. " + quizQuestions[questionNumber].answers[4];
+function nextQuestion() {
+  currentQuestionNumber++;
+  if (currentQuestionNumber < quizQuestions.length) {
+    askQuestion();
+  } else {
+    stopTimer();
+    quizContainer.classList.remove("show-section");
+    quizContainer.classList.add("hide-section");
+    answerCheckContainer.classList.add("hide-section");
+    displayScore();
+  }
+}
 
-  optionContainer.addEventListener("click", function (event) {
-    if (event.target.matches(".option")) {
-      var selectedOption = event.target.getAttribute("data-number");
-      //console.log(selectedOption);
-
-      if (selectedOption === quizQuestions[questionNumber].correctAnswer) {
-        score += 10;
-        answerCheck = `<span class="check-answer"> Correct! </span>`;
-      } else {
-        score += 0;
-        timerCount -= 10;
-        answerCheck = `<span class="check-answer"> Wrong! </span>`;
-      }
-      answerCheckContainer.innerHTML = answerCheck;
-      questionNumber++;
-      askMCQs(questionNumber);
+function displayScore() {
+  scoreContainer.classList.remove("hide-section");
+  scoreContainer.classList.add("show-section");
+  scoreFinal = score;
+  submitScoreButton.addEventListener("click", function () {
+    if (userInitials.value.trim()) {
+      var userScores = {
+        username: userInitials.value.trim(),
+        score: scoreFinal,
+      };
     }
   });
 }
-
-// Attach event listener to start button to call startQuiz function on click
-startButton.addEventListener("click", startQuiz);

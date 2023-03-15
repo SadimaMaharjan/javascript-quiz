@@ -10,29 +10,41 @@
   </head>
   <body>
     <header>
-      <a href="#" class="view-scores">View Highscores</a>
+      <a href="./highscores.html" class="view-scores">View Highscores</a>
       <div class="timer-display">Time: <span id="timer"></span></div>
     </header>
     <main>
-      <section id="landing-content">
+      <section id="landing-container">
         <h1 class="main-title">Coding Quiz Challenge</h1>
         <p>
           Try to answer the following code-related questions within the time
           limit. Keep in mind that incorrect answers will penalize your
           score/time by ten seconds!
         </p>
-        <button id="start">Start Quiz</button>
+        <button id="startQuiz">Start Quiz</button>
       </section>
-      <section id="question-content">
-        <section class="question-container" id="question"></section>
-        <section class="option-container">
-          <button class="option" id="op1" data-number="1">option1</button>
-          <button class="option" id="op2" data-number="2">option2</button>
-          <button class="option" id="op3" data-number="3">option3</button>
-          <button class="option" id="op4" data-number="4">option4</button>
+      <section id="quiz-container">
+        <h1 class="main-title" id="question"></h1>
+        <section class="option-container" id="options">
+          <button class="option" id="1" data-number="1">option1</button>
+          <button class="option" id="2" data-number="2">option2</button>
+          <button class="option" id="3" data-number="3">option3</button>
+          <button class="option" id="4" data-number="4">option4</button>
         </section>
       </section>
       <section class="answer-check-container"></section>
+      <section id="score-container">
+        <h1 class="main-title">All Done!</h1>
+        <p>Your final score is <span id="score"></span></p>
+        <p>
+          Enter initials: <input type="text" id="initials" /><button
+            type="button"
+            id="submit-score"
+          >
+            Submit
+          </button>
+        </p>
+      </section>
     </main>
     <script src="./assets/js/script.js"></script>
   </body>
