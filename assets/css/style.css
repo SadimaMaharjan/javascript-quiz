@@ -20,7 +20,7 @@ header {
   justify-content: space-between;
   margin: 0 0 40px 0;
 }
-.view-scores {
+#view-scores {
   text-decoration: none;
   color: var(--secondaryColor);
   font-size: 1.2em;
@@ -47,15 +47,17 @@ main p {
   line-height: 1.3em;
 }
 
-#startQuiz {
+.btn {
   background-color: var(--primaryColor);
   color: var(--secondaryTextColor);
-  padding: 10px;
+  padding: 8px;
   border-radius: 8px;
   cursor: pointer;
   border: none;
+  font-size: 0.9em;
+  min-width: 5em;
 }
-#startQuiz:hover {
+.btn:hover {
   background-color: var(--secondaryColor);
 }
 
@@ -64,13 +66,15 @@ main p {
 }
 
 #quiz-container,
-#score-container {
+#score-container,
+#highscores-container {
   text-align: left;
   display: none;
 }
 
 #quiz-container.show-section,
-#score-container.show-section {
+#score-container.show-section,
+#highscores-container.show-section {
   display: block;
   width: 75%;
   margin: 0 auto;
@@ -122,4 +126,18 @@ main p {
   top: 0;
   width: 100%;
   left: 0;
+}
+
+button#submit-score {
+  margin-left: 10px;
+}
+
+#score-board div {
+  background-color: #d9d3e8;
+  margin-bottom: 5px;
+  padding: 5px;
+}
+
+#score-board {
+  margin-bottom: 40px;
 }

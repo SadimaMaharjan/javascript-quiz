@@ -10,7 +10,9 @@
   </head>
   <body>
     <header>
-      <a href="./highscores.html" class="view-scores">View Highscores</a>
+      <a href="#" id="view-scores" onClick="displayHighscores()"
+        >View Highscores</a
+      >
       <div class="timer-display">Time: <span id="timer"></span></div>
     </header>
     <main>
@@ -21,7 +23,7 @@
           limit. Keep in mind that incorrect answers will penalize your
           score/time by ten seconds!
         </p>
-        <button id="startQuiz">Start Quiz</button>
+        <button id="startQuiz" class="btn">Start Quiz</button>
       </section>
       <section id="quiz-container">
         <h1 class="main-title" id="question"></h1>
@@ -38,12 +40,19 @@
         <p>Your final score is <span id="score"></span></p>
         <p>
           Enter initials: <input type="text" id="initials" /><button
+            class="btn"
             type="button"
             id="submit-score"
           >
             Submit
           </button>
         </p>
+      </section>
+      <section id="highscores-container">
+        <h1 class="main-title">Highscores</h1>
+        <section id="score-board"></section>
+        <button id="go-back" class="btn">Go Back</button>
+        <button id="clear-highscores" class="btn">Clear Highscores</button>
       </section>
     </main>
     <script src="./assets/js/script.js"></script>

@@ -14,6 +14,7 @@ var highscoresContainer = document.getElementById("highscores-container");
 var scoreBoard = document.getElementById("score-board");
 var goBackButton = document.getElementById("go-back");
 var clearHighscoresButton = document.getElementById("clear-highscores");
+var viewScoresLink = document.getElementById("view-scores");
 
 // create variables that captures the element
 
@@ -23,7 +24,7 @@ var score = 0;
 var currentQuestionNumber = 0;
 var answerCheck = "";
 var scoreCheck = "";
-var scoreBoard = [];
+var highScores = [];
 
 var quizQuestions = [
   {
@@ -96,6 +97,7 @@ function startQuiz() {
   landingContainer.classList.add("hide-section");
   quizContainer.classList.add("show-section");
   scoreContainer.classList.add("hide-section");
+  highscoresContainer.classList.add("hide-section");
   startTimer();
   askQuestion();
 }
@@ -167,13 +169,47 @@ function nextQuestion() {
 function displayScore() {
   scoreContainer.classList.remove("hide-section");
   scoreContainer.classList.add("show-section");
-  scoreFinal = score;
+  scoreFinal.textContent = score;
   submitScoreButton.addEventListener("click", function () {
     if (userInitials.value.trim()) {
       var userScores = {
         username: userInitials.value.trim(),
-        score: scoreFinal,
+        score: scoreFinal.textContent,
       };
+      highScores.push(userScores);
+      localStorage.setItem("scores", JSON.stringify(highScores));
+      //console.log(highScores);
+      displayHighscores();
     }
   });
 }
+
+viewScoresLink.addEventListener("click", function () {
+  displayHighscores();
+});
+
+function displayHighscores() {
+  landingContainer.classList.add("hide-section");
+  scoreContainer.classList.add("hide-section");
+  scoreContainer.classList.remove("show-section");
+  highscoresContainer.classList.remove("hide-section");
+  highscoresContainer.classList.add("show-section");
+  highScores = JSON.parse(localStorage.getItem("scores"));
+
+  for (var i = 0; i < highScores.length; i++) {
+    var individualScore = document.createElement("div");
+    individualScore.textContent = `${i + 1}. ${highScores[i].username}- ${
+      highScores[i].score
+    }`;
+    console.log(individualScore);
+    scoreBoard.appendChild(individualScore);
+  }
+}
+
+goBackButton.addEventListener("click", function () {
+  highscoresContainer.classList.remove("show-section");
+  landingContainer.classList.remove("hide-section");
+  landingContainer.classList.add("show-section");
+});
+
+clearHighscoresButton.addEventListener("click", function () {});
