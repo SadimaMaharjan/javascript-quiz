@@ -110,6 +110,9 @@ function startTimer() {
     if (timerCount === 0) {
       // Stops execution of action at set interval
       stopTimer();
+      hide(quizContainer);
+      hide(answerCheckContainer);
+      show(scoreContainer);
     }
   }, 1000);
 }
