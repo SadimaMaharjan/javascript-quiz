@@ -38,4 +38,4 @@ The following images show the web application's appearance and functionality:
 
 The following link redirects to the deployed application:
 
-![Github Deployment Link](https://sadimamaharjan.github.io/javascript-quiz/)
+[Github Deployment Link](https://sadimamaharjan.github.io/javascript-quiz/)
