@@ -227,11 +227,8 @@ function displayHighscores() {
 }
 
 goBackButton.addEventListener("click", function () {
-  highscoresContainer.classList.remove("show-section");
-  landingContainer.classList.remove("hide-section");
-  landingContainer.classList.add("show-section");
-  location.href = "../../index.html";
-  console.log(location.href);
+  hide(highscoresContainer);
+  show(landingContainer);
 });
 
 clearHighscoresButton.addEventListener("click", function () {
