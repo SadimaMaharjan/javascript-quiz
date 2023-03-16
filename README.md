@@ -28,11 +28,11 @@ THEN I can save my initials and my score
 
 The following images show the web application's appearance and functionality:
 
-![Coding Quiz Landing Page](./assets/images/Screenshot1.png)
-![Multiple choice questions in quiz](./assets/images/Screenshot2.png)
-![Shows the answer is correcr or wrong](./assets/images/Screenshot3.png)
-![Inputs initials and displays score](./assets/images/Screenshot4.png)
-![Displays highscores](./assets/images/Screenshot5.png)
+![Coding Quiz Landing Page](./assets/images/screenshot1.png)
+![Multiple choice questions in quiz](./assets/images/screenshot2.png)
+![Shows the answer is correcr or wrong](./assets/images/screenshot3.png)
+![Inputs initials and displays score](./assets/images/screenshot4.png)
+![Displays highscores](./assets/images/screenshot5.png)
 
 ## Github Deployment
 
