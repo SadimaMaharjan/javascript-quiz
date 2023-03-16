@@ -89,7 +89,7 @@ var quizQuestions = [
 
 // Attach event listener to start button to call startQuiz function on click
 startButton.addEventListener("click", startQuiz);
-var timeEl = document.querySelector(".timer-display");
+var timeEl = document.querySelector("#timer");
 
 // Start Quiz function
 
@@ -105,7 +105,7 @@ function startTimer() {
   // Sets interval in variable
   timerInterval = setInterval(function () {
     timerCount--;
-    timeEl.textContent = "Time: " + timerCount;
+    timeEl.textContent = timerCount;
     //console.log(timerCount);
     if (timerCount === 0) {
       // Stops execution of action at set interval
@@ -228,6 +228,7 @@ function displayHighscores() {
 
 goBackButton.addEventListener("click", function () {
   hide(highscoresContainer);
+  header.style.display = "flex";
   show(landingContainer);
 });
 
