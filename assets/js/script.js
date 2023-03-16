@@ -14,6 +14,7 @@ var highscoresContainer = document.getElementById("highscores-container");
 var scoreBoard = document.getElementById("score-board");
 var goBackButton = document.getElementById("go-back");
 var clearHighscoresButton = document.getElementById("clear-highscores");
+var header = document.getElementById("header-container");
 var viewScoresLink = document.getElementById("view-scores");
 
 // create variables that captures the element
@@ -23,7 +24,6 @@ var timerCount = 60;
 var score = 0;
 var currentQuestionNumber = 0;
 var answerCheck = "";
-var scoreCheck = "";
 var highScores = [];
 
 var quizQuestions = [
@@ -94,10 +94,8 @@ var timeEl = document.querySelector(".timer-display");
 // Start Quiz function
 
 function startQuiz() {
-  landingContainer.classList.add("hide-section");
-  quizContainer.classList.add("show-section");
-  scoreContainer.classList.add("hide-section");
-  highscoresContainer.classList.add("hide-section");
+  hide(landingContainer);
+  show(quizContainer);
   startTimer();
   askQuestion();
 }
@@ -118,6 +116,14 @@ function startTimer() {
 
 function stopTimer() {
   clearInterval(timerInterval);
+}
+
+function hide(element) {
+  element.style.display = "none";
+}
+
+function show(element) {
+  element.style.display = "block";
 }
 
 // Function to display Multiple Choice Questions
@@ -142,6 +148,7 @@ optionsEl.addEventListener("click", function (event) {
 });
 
 function checkAnswer(answer) {
+  show(answerCheckContainer);
   var selectedOption = answer.getAttribute("data-number");
   if (selectedOption === quizQuestions[currentQuestionNumber].correctAnswer) {
     score += 10;
@@ -159,43 +166,53 @@ function nextQuestion() {
     askQuestion();
   } else {
     stopTimer();
-    quizContainer.classList.remove("show-section");
-    quizContainer.classList.add("hide-section");
-    answerCheckContainer.classList.add("hide-section");
-    displayScore();
+    scoreFinal.textContent = score;
+    hide(quizContainer);
+    hide(answerCheckContainer);
+    show(scoreContainer);
   }
 }
 
-function displayScore() {
-  scoreContainer.classList.remove("hide-section");
-  scoreContainer.classList.add("show-section");
-  scoreFinal.textContent = score;
-  submitScoreButton.addEventListener("click", function () {
-    if (userInitials.value.trim()) {
-      var userScores = {
-        username: userInitials.value.trim(),
-        score: scoreFinal.textContent,
-      };
-      highScores.push(userScores);
-      localStorage.setItem("scores", JSON.stringify(highScores));
-      //console.log(highScores);
-      displayHighscores();
-    }
-  });
+//reset local variables
+function reset() {
+  score = 0;
+  currentQuestionNumber = 0;
+  timeEl.textContent = 0;
 }
 
+submitScoreButton.addEventListener("click", function () {
+  hide(answerCheckContainer);
+  if (userInitials.value.trim()) {
+    var userScores = {
+      username: userInitials.value.trim(),
+      score: scoreFinal.textContent,
+    };
+    userInitials.value = "";
+    highScores = JSON.parse(localStorage.getItem("scores")) || [];
+    highScores.push(userScores);
+    localStorage.setItem("scores", JSON.stringify(highScores));
+    //console.log(highScores);
+    hide(scoreContainer);
+    displayHighscores();
+    reset();
+  }
+});
+
 viewScoresLink.addEventListener("click", function () {
+  hide(landingContainer);
+  hide(quizContainer);
+  hide(scoreContainer);
   displayHighscores();
+  reset();
 });
 
 function displayHighscores() {
-  landingContainer.classList.add("hide-section");
-  scoreContainer.classList.add("hide-section");
-  scoreContainer.classList.remove("show-section");
-  highscoresContainer.classList.remove("hide-section");
-  highscoresContainer.classList.add("show-section");
+  hide(landingContainer);
+  hide(scoreContainer);
+  show(highscoresContainer);
+  hide(header);
   highScores = JSON.parse(localStorage.getItem("scores"));
-
+  header.classList.add("hide-section");
   for (var i = 0; i < highScores.length; i++) {
     var individualScore = document.createElement("div");
     individualScore.textContent = `${i + 1}. ${highScores[i].username}- ${
@@ -210,6 +227,13 @@ goBackButton.addEventListener("click", function () {
   highscoresContainer.classList.remove("show-section");
   landingContainer.classList.remove("hide-section");
   landingContainer.classList.add("show-section");
+  location.href = "../../index.html";
+  console.log(location.href);
 });
 
-clearHighscoresButton.addEventListener("click", function () {});
+clearHighscoresButton.addEventListener("click", function () {
+  highScores = [];
+  localStorage.setItem("scores", JSON.stringify(highScores));
+  scoreBoard.innerHTML = "";
+  displayHighscores();
+});

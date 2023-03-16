@@ -24,6 +24,7 @@ header {
   text-decoration: none;
   color: var(--secondaryColor);
   font-size: 1.2em;
+  cursor: pointer;
 }
 
 .timer-display {
@@ -61,21 +62,18 @@ main p {
   background-color: var(--secondaryColor);
 }
 
-.hide-section {
+#quiz-container,
+#score-container,
+#highscores-container,
+.answer-check-container {
+  text-align: left;
   display: none;
 }
 
 #quiz-container,
 #score-container,
-#highscores-container {
-  text-align: left;
-  display: none;
-}
-
-#quiz-container.show-section,
-#score-container.show-section,
-#highscores-container.show-section {
-  display: block;
+#highscores-container,
+.answer-check-container {
   width: 75%;
   margin: 0 auto;
 }
